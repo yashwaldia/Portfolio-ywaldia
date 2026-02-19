@@ -40,7 +40,7 @@ function Footer() {
           ))}
         </ul>
       </div>
-      <p className={styles.copy}>© {new Date().getFullYear()} Yash Waldia. Built with React.</p>
+      <p className={styles.copy}>© {new Date().getFullYear()} Yash Waldia.</p>
     </footer>
   );
 }
