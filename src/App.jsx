@@ -17,10 +17,10 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Skills />
         <Qualification />
-        <Services />
         <Projects />
+        <Skills />
+        {/* <Services /> */}
         <CTABanner />
         <Contact />
       </main>

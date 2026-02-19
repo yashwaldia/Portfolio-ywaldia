@@ -61,7 +61,7 @@ function About() {
 
             <div className={styles.actions}>
               <Button
-                href="/assets/pdf/yash-waldia-resume.pdf"
+                href="/assets/pdf/Yashwaldia_resume.pdf"
                 variant="primary"
                 target="_blank"
               >

@@ -1,13 +1,17 @@
-/* ── Featured row ────────────────── */
-.featuredRow {
+.projects {
+  padding-block: var(--space-20);
+}
+
+/* ── Big rows — 2 columns ────────────────────────── */
+.bigRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
   margin-bottom: var(--space-6);
 }
 
-/* ── Normal grid ─────────────────── */
-.grid {
+/* ── Small row — 3 columns ───────────────────────── */
+.smallRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-5);
@@ -20,11 +24,14 @@
   overflow: hidden;
   background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
-  aspect-ratio: 16 / 10;
   cursor: pointer;
 }
 
-.cardFeatured { aspect-ratio: 16 / 9; }
+/* Big cells — taller aspect ratio */
+.bigCell .card  { aspect-ratio: 16 / 9;  }
+
+/* Small cells — shorter */
+.smallCell .card { aspect-ratio: 16 / 10; }
 
 .cardImg {
   position: absolute;
@@ -86,7 +93,7 @@
   line-height: var(--line-height-tight);
 }
 
-.cardFeatured .cardTitle { font-size: var(--font-size-xl); }
+.bigCell .cardTitle { font-size: var(--font-size-xl); }
 
 .cardDesc {
   font-size: var(--font-size-sm);
@@ -99,10 +106,13 @@
   overflow: hidden;
 }
 
-
 .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
-.tags :global(.tag) { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.85); }
+.tags :global(.tag) {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+}
 
 /* ── Links ───────────────────────── */
 .links { display: flex; gap: var(--space-3); margin-top: var(--space-1); }
@@ -131,10 +141,16 @@
 
 .linkGhost:hover { border-color: #fff; color: #fff; }
 
+/* ── Tablet ──────────────────────── */
+@media (max-width: 900px) {
+  .bigRow   { grid-template-columns: 1fr; }
+  .smallRow { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ── Mobile ──────────────────────── */
-@media (max-width: 900px)  { .grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px)  {
-  .grid, .featuredRow { grid-template-columns: 1fr; }
-  .overlay { opacity: 1; }
+@media (max-width: 600px) {
+  .bigRow,
+  .smallRow   { grid-template-columns: 1fr; }
+  .overlay    { opacity: 1; }
   .overlayContent { transform: translateY(0); }
 }

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import Button from '../../shared/Button/Button';
 import styles from './Hero.module.css';
 
@@ -76,7 +77,7 @@ function Hero() {
               className={styles.socialLink}
               aria-label="GitHub"
             >
-              GH
+              <FiGithub size={18} />
             </a>
             <a
               href="https://linkedin.com/in/yashwaldia"
@@ -85,7 +86,7 @@ function Hero() {
               className={styles.socialLink}
               aria-label="LinkedIn"
             >
-              LI
+              <FiLinkedin size={18} />
             </a>
           </motion.div>
         </motion.div>

@@ -1,20 +1,21 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { FiMail, FiLinkedin, FiGithub, FiMapPin } from 'react-icons/fi';
 import SectionHeader from '../../shared/SectionHeader/SectionHeader';
 import Button from '../../shared/Button/Button';
 import styles from './Contact.module.css';
 
 const INFO = [
-  { icon: '✉',  label: 'Email',    value: 'ywaldia@gmail.com',                href: 'mailto:ywaldia@gmail.com' },
-  { icon: '🔗', label: 'LinkedIn', value: 'linkedin.com/in/yashwaldia',        href: 'https://linkedin.com/in/yashwaldia' },
-  { icon: '⌥',  label: 'GitHub',   value: 'github.com/yashwaldia',             href: 'https://github.com/yashwaldia' },
-  { icon: '📍', label: 'Location', value: 'Greater Noida, Uttar Pradesh, India', href: null },
+  { icon: <FiMail size={18} />,     label: 'Email',    value: 'ywaldia@gmail.com',                 href: 'mailto:ywaldia@gmail.com' },
+  { icon: <FiLinkedin size={18} />, label: 'LinkedIn', value: 'linkedin.com/in/yashwaldia',         href: 'https://linkedin.com/in/yashwaldia' },
+  { icon: <FiGithub size={18} />,   label: 'GitHub',   value: 'github.com/yashwaldia',              href: 'https://github.com/yashwaldia' },
+  { icon: <FiMapPin size={18} />,   label: 'Location', value: 'Greater Noida, Uttar Pradesh, India', href: null },
 ];
 
 function Contact() {
   const formRef  = useRef();
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle');
 
   const handleSubmit = async (e) => {
     e.preventDefault();

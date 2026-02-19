@@ -1,3 +1,4 @@
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import styles from './Footer.module.css';
 
 const LINKS = [
@@ -7,8 +8,8 @@ const LINKS = [
 ];
 
 const SOCIALS = [
-  { label: 'GitHub',   href: 'https://github.com/yashwaldia',                     icon: 'GH' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/yash-waldia',               icon: 'LI' },
+  { label: 'GitHub',   href: 'https://github.com/yashwaldia',        icon: <FiGithub size={16} /> },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/yashwaldia',   icon: <FiLinkedin size={16} /> },
 ];
 
 function Footer() {
@@ -18,13 +19,21 @@ function Footer() {
         <span className={styles.logo}>YW<span className={styles.dot}>.</span></span>
         <ul className={styles.links}>
           {LINKS.map(l => (
-            <li key={l.href}><a href={l.href} className={styles.link}>{l.label}</a></li>
+            <li key={l.href}>
+              <a href={l.href} className={styles.link}>{l.label}</a>
+            </li>
           ))}
         </ul>
         <ul className={styles.socials}>
           {SOCIALS.map(s => (
             <li key={s.label}>
-              <a href={s.href} target="_blank" rel="noopener noreferrer" className={styles.social} aria-label={s.label}>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.social}
+                aria-label={s.label}
+              >
                 {s.icon}
               </a>
             </li>
