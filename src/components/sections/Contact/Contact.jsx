@@ -20,13 +20,16 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
+      console.log('SERVICE:', import.meta.env.VITE_EMAILJS_SERVICE_ID);
+  console.log('TEMPLATE:', import.meta.env.VITE_EMAILJS_TEMPLATE_ID);
+  console.log('KEY:', import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
     try {
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        formRef.current,
-        'YOUR_PUBLIC_KEY'
-      );
+    await emailjs.sendForm(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    formRef.current,
+    { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+    );
       setStatus('success');
       formRef.current.reset();
     } catch {

@@ -1,3 +1,4 @@
+import { FiPlay, FiGithub } from 'react-icons/fi';
 import Tag from '../../shared/Tag/Tag';
 import styles from './Projects.module.css';
 
@@ -6,6 +7,7 @@ function ProjectCard({ project }) {
 
   return (
     <div className={[styles.card, featured ? styles.cardFeatured : ''].join(' ')}>
+
       {/* Screenshot — full card background */}
       <div className={styles.cardImg}>
         <img src={image} alt={title} loading="lazy" />
@@ -24,18 +26,31 @@ function ProjectCard({ project }) {
 
           <div className={styles.links}>
             {liveUrl && (
-              <a href={liveUrl} target="_blank" rel="noopener noreferrer" className={styles.linkBtn}>
-                ▶ Live Demo
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.linkBtn}
+              >
+                <FiPlay size={12} style={{ marginRight: '5px' }} />
+                Live Demo
               </a>
             )}
             {repoUrl && (
-              <a href={repoUrl} target="_blank" rel="noopener noreferrer" className={styles.linkGhost}>
-                ⌥ GitHub
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.linkGhost}
+              >
+                <FiGithub size={12} style={{ marginRight: '5px' }} />
+                GitHub
               </a>
             )}
           </div>
         </div>
       </div>
+
     </div>
   );
 }
