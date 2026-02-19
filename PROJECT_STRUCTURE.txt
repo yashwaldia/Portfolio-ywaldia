@@ -1,0 +1,19 @@
+.
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── PROJECT_STRUCTURE.txt
+├── public
+│   └── vite.svg
+├── README.md
+├── src
+│   ├── App.css
+│   ├── App.jsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── index.css
+│   └── main.jsx
+└── vite.config.js
+
+4 directories, 13 files

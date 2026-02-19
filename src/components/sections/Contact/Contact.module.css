@@ -1,0 +1,70 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+/* ── Info panel ──────────────────── */
+.info { display: flex; flex-direction: column; gap: var(--space-8); }
+
+.infoTitle { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-text); }
+.infoDesc  { font-size: var(--font-size-sm); color: var(--color-text-muted); line-height: var(--line-height-relaxed); }
+
+.infoList  { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.infoItem { display: flex; align-items: flex-start; gap: var(--space-4); }
+
+.infoIcon {
+  font-size: var(--font-size-md);
+  width: 40px;
+  height: 40px;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoLabel { display: block; font-size: var(--font-size-xs); color: var(--color-text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.infoValue { font-size: var(--font-size-sm); color: var(--color-text-muted); transition: color var(--transition-fast); }
+a.infoValue:hover { color: var(--color-accent); }
+
+/* ── Form ────────────────────────── */
+.form  { display: flex; flex-direction: column; gap: var(--space-5); }
+.row   { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.label    { font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.input,
+.textarea {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  resize: none;
+  outline: none;
+}
+
+.input::placeholder, .textarea::placeholder { color: var(--color-text-light); }
+.input:focus, .textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.submit { align-self: flex-start; }
+
+.msgSuccess { font-size: var(--font-size-sm); color: #16a34a; margin-top: var(--space-2); }
+.msgError   { font-size: var(--font-size-sm); color: #dc2626; margin-top: var(--space-2); }
+
+/* ── Mobile ──────────────────────── */
+@media (max-width: 768px) {
+  .grid  { grid-template-columns: 1fr; gap: var(--space-10); }
+  .row   { grid-template-columns: 1fr; }
+  .submit { width: 100%; justify-content: center; }
+}
