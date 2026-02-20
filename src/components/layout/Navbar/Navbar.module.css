@@ -13,14 +13,11 @@
   border: 1px solid transparent;
   z-index: var(--z-navbar);
 
-  /* ✅ Start from blur(0) so browser can animate it smoothly */
   backdrop-filter: blur(0px) saturate(100%);
   -webkit-backdrop-filter: blur(0px) saturate(100%);
 
-  /* ✅ GPU hint */
   will-change: width, top, border-radius, backdrop-filter;
 
-  /* ✅ All transitions slowed to 0.6s */
   transition:
     top             0.6s cubic-bezier(0.4, 0, 0.2, 1),
     width           0.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -32,7 +29,6 @@
     backdrop-filter 0.6s ease;
 }
 
-
 /* ── Scrolled — floating pill ─────── */
 .header.scrolled {
   top: 14px;
@@ -40,7 +36,6 @@
   max-width: 860px;
   border-radius: 100px;
 
-  /* Glass morphism */
   background: rgba(var(--color-bg-rgb), 0.6);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
@@ -92,7 +87,7 @@
   padding: 0;
 }
 
-/* ── Nav links — keep your underline style ── */
+/* ── Nav links ──────────────────────── */
 .navLink {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -117,14 +112,10 @@
 }
 
 .navLink:hover,
-.navLink.active {
-  color: var(--color-text);
-}
+.navLink.active { color: var(--color-text); }
 
 .navLink:hover::after,
-.navLink.active::after {
-  width: 100%;
-}
+.navLink.active::after { width: 100%; }
 
 /* ── Controls ───────────────────────── */
 .controls {
@@ -180,47 +171,163 @@
 .hamburger.hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.hamburgerOpen span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── Overlay ────────────────────────── */
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: calc(var(--z-navbar) - 1);
-  backdrop-filter: blur(2px);
-}
+/* ── Overlay (unused on desktop) ────── */
+.overlay { display: none; }
 
-/* ── Mobile — keep your existing right-drawer ── */
+/* ════════════════════════════════════════
+   MOBILE — full-screen overlay menu
+════════════════════════════════════════ */
 @media (max-width: 767px) {
+  /* Show hamburger, hide desktop navList */
   .hamburger { display: flex; }
-  .overlay   { display: block; }
+  .navList   { display: none; }
 
-  .navList {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70vw;
-    max-width: 280px;
-    height: 100vh;
-    background: var(--color-surface);
-    border-left: 1px solid var(--color-border);
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: var(--space-12) var(--space-8);
-    gap: var(--space-6);
-    z-index: var(--z-navbar);
-    transition: right var(--transition-base);
-    border-radius: 0;              /* no pill on mobile drawer */
-  }
-
-  .navList.navListOpen { right: 0; }
-  .navLink { font-size: var(--font-size-md); }
-
-  /* Pill shrinks less on mobile */
+  /* Pill smaller on mobile */
   .header.scrolled {
     width: calc(100% - 24px);
     top: 10px;
     border-radius: 20px;
+  }
+
+  /* ── Full-screen overlay ───────────── */
+  .mobileOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-navbar) + 1);
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px) scale(0.98);
+    transition:
+      opacity   0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobileOverlayOpen {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── Top bar — logo + close btn ────── */
+  .mobileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .mobileLogo {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  /* ── Close button ───────────────────── */
+  .closeBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-alt);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .closeBtn:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  /* ── Nav links — centered vertically ── */
+  .mobileNav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .mobileNavList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* Stagger-in animation per item */
+  .mobileNavItem {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition:
+      opacity   0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .mobileOverlayOpen .mobileNavItem {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .mobileNavLink {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semi);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .mobileNavLink:hover {
+    color: var(--color-text);
+    background: var(--color-surface-alt);
+  }
+
+  .mobileNavLink.mobileActive {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+
+  /* Index number beside each link */
+  .mobileNavNum {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    opacity: 0.7;
+    min-width: 20px;
+  }
+
+  /* ── Footer — theme toggle ──────────── */
+  .mobileFooter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-6);
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .mobileFooterText {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
   }
 }
