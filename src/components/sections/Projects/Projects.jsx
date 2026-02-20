@@ -9,7 +9,8 @@ function Projects() {
   const bigRow2  = projectsData.slice(2, 4); // VisionFlow, ChartMasterAI
   const smallRow = projectsData.slice(4, 7); // Studio 634, Evis Networx, n8n
 
-  const renderRow = (items, rowClass, cardClass, baseDelay = 0) =>
+  // Added isSmall param ↓
+  const renderRow = (items, rowClass, cardClass, baseDelay = 0, isSmall = false) =>
     items.map((p, i) => (
       <motion.div
         key={p.id}
@@ -19,7 +20,7 @@ function Projects() {
         viewport={{ once: true }}
         transition={{ duration: 0.45, delay: baseDelay + i * 0.1 }}
       >
-        <ProjectCard project={p} />
+        <ProjectCard project={p} isSmall={isSmall} />  {/* passed down ↓ */}
       </motion.div>
     ));
 
@@ -38,10 +39,11 @@ function Projects() {
           {renderRow(bigRow2, styles.bigRow, styles.bigCell, 0.1)}
         </div>
 
-        {/* Row 3 — 3 small cards */}
+        {/* Row 3 — 3 small cards — isSmall: true ↓ */}
         <div className={styles.smallRow}>
-          {renderRow(smallRow, styles.smallRow, styles.smallCell, 0.15)}
+          {renderRow(smallRow, styles.smallRow, styles.smallCell, 0.15, true)}
         </div>
+
       </div>
     </section>
   );

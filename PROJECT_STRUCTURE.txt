@@ -1,19 +1,92 @@
 .
 ├── eslint.config.js
 ├── index.html
+├── netlify.toml
 ├── package-lock.json
 ├── package.json
 ├── PROJECT_STRUCTURE.txt
 ├── public
+│   ├── assets
+│   │   ├── img
+│   │   │   ├── profile.jpg
+│   │   │   ├── project-alzcare.png
+│   │   │   ├── project-chartmaster.png
+│   │   │   ├── project-evisnetworx.png
+│   │   │   ├── project-n8n.png
+│   │   │   ├── project-pihealth.png
+│   │   │   └── project-studio634.png
+│   │   └── pdf
+│   │       └── Yashwaldia_resume.pdf
 │   └── vite.svg
 ├── README.md
 ├── src
 │   ├── App.css
 │   ├── App.jsx
 │   ├── assets
+│   │   ├── profile.jpg
 │   │   └── react.svg
+│   ├── components
+│   │   ├── layout
+│   │   │   ├── Footer
+│   │   │   │   ├── Footer.jsx
+│   │   │   │   └── Footer.module.css
+│   │   │   ├── Navbar
+│   │   │   │   ├── Navbar.jsx
+│   │   │   │   └── Navbar.module.css
+│   │   │   └── ScrollToTop
+│   │   │       ├── ScrollToTop.jsx
+│   │   │       └── ScrollToTop.module.css
+│   │   ├── sections
+│   │   │   ├── About
+│   │   │   │   ├── About.jsx
+│   │   │   │   └── About.module.css
+│   │   │   ├── Contact
+│   │   │   │   ├── Contact.jsx
+│   │   │   │   └── Contact.module.css
+│   │   │   ├── CTABanner
+│   │   │   │   ├── CTABanner.jsx
+│   │   │   │   └── CTABanner.module.css
+│   │   │   ├── Hero
+│   │   │   │   ├── Hero.jsx
+│   │   │   │   └── Hero.module.css
+│   │   │   ├── Projects
+│   │   │   │   ├── ProjectCard.jsx
+│   │   │   │   ├── Projects.jsx
+│   │   │   │   └── Projects.module.css
+│   │   │   ├── Qualification
+│   │   │   │   ├── Qualification.jsx
+│   │   │   │   └── Qualification.module.css
+│   │   │   ├── Services
+│   │   │   │   ├── Services.jsx
+│   │   │   │   └── Services.module.css
+│   │   │   └── Skills
+│   │   │       ├── Skills.jsx
+│   │   │       └── Skills.module.css
+│   │   └── shared
+│   │       ├── Button
+│   │       │   ├── Button.jsx
+│   │       │   └── Button.module.css
+│   │       ├── SectionHeader
+│   │       │   ├── SectionHeader.jsx
+│   │       │   └── SectionHeader.module.css
+│   │       └── Tag
+│   │           ├── Tag.jsx
+│   │           └── Tag.module.css
+│   ├── context
+│   │   └── ThemeContext.jsx
+│   ├── data
+│   │   ├── experience.js
+│   │   ├── projects.js
+│   │   └── skills.js
+│   ├── hooks
+│   │   ├── useScrollReveal.js
+│   │   └── useTheme.js
 │   ├── index.css
-│   └── main.jsx
+│   ├── main.jsx
+│   └── styles
+│       ├── animations.css
+│       ├── global.css
+│       └── variables.css
 └── vite.config.js
 
-4 directories, 13 files
+29 directories, 61 files

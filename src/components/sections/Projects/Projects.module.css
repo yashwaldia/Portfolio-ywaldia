@@ -27,10 +27,7 @@
   cursor: pointer;
 }
 
-/* Big cells */
 .bigCell .card   { aspect-ratio: 16 / 9; }
-
-/* Small cells */
 .smallCell .card { aspect-ratio: 4 / 3; }
 
 .cardImg {
@@ -55,35 +52,46 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.75) 50%,
-    rgba(0, 0, 0, 0.15) 100%
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.82) 55%,
+    rgba(0, 0, 0, 0.20) 100%
   );
   display: flex;
-  align-items: flex-end;
-  padding: var(--space-6);
+  flex-direction: column;
+  justify-content: flex-end;   /* anchor to bottom */
+  padding: var(--space-4);
   opacity: 0;
   transition: opacity var(--transition-base);
 }
 
 .card:hover .overlay { opacity: 1; }
 
+/* ── Overlay content — scrollable so nothing clips ── */
 .overlayContent {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
   transform: translateY(12px);
   transition: transform var(--transition-base);
+  width: 100%;
+  max-height: 88%;           /* never taller than card */
+  overflow-y: auto;          /* scroll if content overflows */
+  scrollbar-width: none;     /* hide scrollbar Firefox */
+  -ms-overflow-style: none;  /* hide scrollbar IE */
 }
+
+.overlayContent::-webkit-scrollbar { display: none; } /* hide scrollbar Chrome */
 
 .card:hover .overlayContent { transform: translateY(0); }
 
+/* ── Text elements ───────────────── */
 .typeTag {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semi);
   color: var(--color-accent);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  flex-shrink: 0;             /* never gets squeezed away */
 }
 
 .cardTitle {
@@ -91,9 +99,10 @@
   font-weight: var(--font-weight-bold);
   color: #ffffff;
   line-height: var(--line-height-tight);
+  flex-shrink: 0;
 }
 
-.bigCell .cardTitle  { font-size: var(--font-size-xl); }
+.bigCell .cardTitle   { font-size: var(--font-size-xl); }
 .smallCell .cardTitle { font-size: var(--font-size-md); }
 
 .cardDesc {
@@ -107,19 +116,25 @@
   overflow: hidden;
 }
 
-/* Small cards — 1 line description only */
-.smallCell .cardDesc {
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
+/* Small cards — 1 line by default, expands via JS class */
+.smallCell .cardDesc { -webkit-line-clamp: 1; line-clamp: 1; }
+
+/* Expanded state — JSX toggles .expanded on .smallCell */
+.smallCell.expanded .cardDesc {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
 }
 
-/* Small cards — max 1 row of tags */
+.smallCell.expanded .tags { max-height: none; }
+
+/* ── Tags ────────────────────────── */
+.tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
 .smallCell .tags {
   max-height: 28px;
   overflow: hidden;
 }
-
-.tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
 .tags :global(.tag) {
   background: rgba(255,255,255,0.12);
@@ -127,8 +142,30 @@
   color: rgba(255,255,255,0.85);
 }
 
+/* ── More button (small cards) ───── */
+.moreBtn {
+  align-self: flex-start;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semi);
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  margin-top: var(--space-1);
+  transition: opacity var(--transition-fast);
+}
+
+.moreBtn:hover { opacity: 0.75; text-decoration: underline; }
+
 /* ── Links ───────────────────────── */
-.links { display: flex; gap: var(--space-3); margin-top: var(--space-1); }
+.links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
 
 .linkBtn {
   font-size: var(--font-size-xs);
@@ -140,6 +177,8 @@
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
 }
 
 .linkBtn:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
@@ -154,20 +193,78 @@
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
 }
 
 .linkGhost:hover { border-color: #fff; color: #fff; }
 
-/* ── Tablet ──────────────────────── */
+/* ── Tablet (≤900px) ─────────────── */
 @media (max-width: 900px) {
   .bigRow   { grid-template-columns: 1fr; }
   .smallRow { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── Mobile ──────────────────────── */
+/* ── Mobile (≤600px) ─────────────── */
 @media (max-width: 600px) {
   .bigRow,
-  .smallRow        { grid-template-columns: 1fr; }
-  .overlay         { opacity: 1; }
-  .overlayContent  { transform: translateY(0); }
+  .smallRow { grid-template-columns: 1fr; }
+
+  /* Taller aspect ratio on mobile so content fits */
+  .bigCell .card   { aspect-ratio: 4 / 3; }
+  .smallCell .card { aspect-ratio: 3 / 2; }
+
+  /* Always show overlay on mobile — no hover needed */
+  .overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.97) 0%,
+      rgba(0, 0, 0, 0.85) 50%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+  }
+
+  .overlayContent { transform: translateY(0); }
+
+  /* Show 2 lines of description on mobile */
+  .smallCell .cardDesc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Show all tags on mobile */
+  .smallCell .tags { max-height: none; }
+
+  /* Smaller title on mobile */
+  .bigCell .cardTitle,
+  .smallCell .cardTitle { font-size: var(--font-size-base) !important; }
+}
+
+/* ── Small phones (≤400px) ───────── */
+@media (max-width: 400px) {
+  .bigCell .card,
+  .smallCell .card { aspect-ratio: 1 / 1; }
+
+  .overlay { padding: var(--space-3); }
+}
+/* Expanded overlay — grows upward from bottom */
+.overlayExpanded {
+  max-height: 92%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.overlayExpanded::-webkit-scrollbar { display: none; }
+
+/* Expanded desc — show all lines */
+.cardDescExpanded {
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+  overflow: visible;
+}
+
+/* Expanded tags — show all rows */
+.tagsExpanded {
+  max-height: none !important;
 }
