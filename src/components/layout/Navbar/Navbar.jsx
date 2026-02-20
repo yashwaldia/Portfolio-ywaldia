@@ -3,38 +3,51 @@ import { useTheme } from '../../../hooks/useTheme';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
-  { label: 'Home',          href: '#home' },
-  { label: 'About',         href: '#about' },
-  { label: 'Skills',        href: '#skills' },
-  { label: 'Experience',    href: '#qualification' },
-  { label: 'Projects',      href: '#projects' },
-  { label: 'Contact',       href: '#contact' },
+  { label: 'Home',       href: '#home' },
+  { label: 'About',      href: '#about' },
+  { label: 'Experience', href: '#qualification' },
+  { label: 'Projects',   href: '#projects' },
+  { label: 'Skills',     href: '#skills' },
+  { label: 'Contact',    href: '#contact' },
 ];
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  const [menuOpen,    setMenuOpen]    = useState(false);
-  const [scrolled,    setScrolled]    = useState(false);
-  const [activeLink,  setActiveLink]  = useState('#home');
+  const [menuOpen,   setMenuOpen]   = useState(false);
+  const [scrolled,   setScrolled]   = useState(false);
+  const [activeLink, setActiveLink] = useState('#home');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Close menu on ESC
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Auto-highlight active section on scroll
+  useEffect(() => {
+    const sections = NAV_LINKS.map(l => document.querySelector(l.href)).filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveLink(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    sections.forEach(s => observer.observe(s));
+    return () => sections.forEach(s => observer.unobserve(s));
   }, []);
 
   const handleNavClick = (href) => {
@@ -51,7 +64,7 @@ function Navbar() {
           YW<span className={styles.logoDot}>.</span>
         </a>
 
-        {/* Desktop + Mobile Menu */}
+        {/* ✅ Single navList — desktop flex + mobile fixed drawer */}
         <ul className={[styles.navList, menuOpen ? styles.navListOpen : ''].join(' ')}>
           {NAV_LINKS.map(({ label, href }) => (
             <li key={href}>
@@ -68,7 +81,6 @@ function Navbar() {
 
         {/* Right controls */}
         <div className={styles.controls}>
-          {/* Theme toggle */}
           <button
             className={styles.themeToggle}
             onClick={toggleTheme}
@@ -77,7 +89,6 @@ function Navbar() {
             {theme === 'dark' ? '☀' : '☾'}
           </button>
 
-          {/* Hamburger */}
           <button
             className={[styles.hamburger, menuOpen ? styles.hamburgerOpen : ''].join(' ')}
             onClick={() => setMenuOpen(prev => !prev)}

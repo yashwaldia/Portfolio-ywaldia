@@ -1,49 +1,106 @@
+/* ═══════════════════════════════════════════
+   HEADER — always centered, morphs on scroll
+═══════════════════════════════════════════ */
 .header {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   height: var(--header-height);
   background: transparent;
+  border-radius: 0;
+  border: 1px solid transparent;
   z-index: var(--z-navbar);
-  transition: background var(--transition-base), box-shadow var(--transition-base);
+
+  /* ✅ Start from blur(0) so browser can animate it smoothly */
+  backdrop-filter: blur(0px) saturate(100%);
+  -webkit-backdrop-filter: blur(0px) saturate(100%);
+
+  /* ✅ GPU hint */
+  will-change: width, top, border-radius, backdrop-filter;
+
+  /* ✅ All transitions slowed to 0.6s */
+  transition:
+    top             0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    width           0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width       0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius   0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    background      0.6s ease,
+    box-shadow      0.6s ease,
+    border-color    0.6s ease,
+    backdrop-filter 0.6s ease;
 }
 
+
+/* ── Scrolled — floating pill ─────── */
 .header.scrolled {
-  background: var(--color-bg);
-  box-shadow: 0 1px 0 var(--color-border);
+  top: 14px;
+  width: calc(100% - 48px);
+  max-width: 860px;
+  border-radius: 100px;
+
+  /* Glass morphism */
+  background: rgba(var(--color-bg-rgb), 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-color: rgba(var(--color-border-rgb), 0.3);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
 }
 
+/* ── Nav inner row ──────────────────── */
 .nav {
-  height: 100%;
+  height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  transition: padding var(--transition-base), height var(--transition-base);
 }
 
-/* ── Logo ─────────────────────────── */
+.header.scrolled .nav {
+  padding: 0 var(--space-5);
+  height: 52px;
+}
+
+/* ── Logo ───────────────────────────── */
 .logo {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
   letter-spacing: -0.02em;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
 }
+
+.logo:hover { opacity: 0.7; }
 
 .logoDot { color: var(--color-accent); }
 
-/* ── Nav Links (Desktop) ─────────── */
+/* ── Desktop nav list ───────────────── */
 .navList {
   display: flex;
   align-items: center;
   gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* ── Nav links — keep your underline style ── */
 .navLink {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
   position: relative;
   padding-bottom: 2px;
+  text-decoration: none;
+  white-space: nowrap;
   transition: color var(--transition-fast);
 }
 
@@ -69,11 +126,12 @@
   width: 100%;
 }
 
-/* ── Controls ────────────────────── */
+/* ── Controls ───────────────────────── */
 .controls {
   display: flex;
   align-items: center;
   gap: var(--space-4);
+  flex-shrink: 0;
 }
 
 .themeToggle {
@@ -85,9 +143,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-base);
+  cursor: pointer;
   background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
+  transition: all var(--transition-base);
 }
 
 .themeToggle:hover {
@@ -96,13 +155,16 @@
   color: var(--color-text);
 }
 
-/* ── Hamburger ───────────────────── */
+/* ── Hamburger ──────────────────────── */
 .hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
   width: 28px;
   padding: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .hamburger span {
@@ -118,17 +180,17 @@
 .hamburger.hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.hamburgerOpen span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── Overlay (mobile) ────────────── */
+/* ── Overlay ────────────────────────── */
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: calc(var(--z-navbar) - 1);
   backdrop-filter: blur(2px);
 }
 
-/* ── Mobile ──────────────────────── */
+/* ── Mobile — keep your existing right-drawer ── */
 @media (max-width: 767px) {
   .hamburger { display: flex; }
   .overlay   { display: block; }
@@ -149,8 +211,16 @@
     gap: var(--space-6);
     z-index: var(--z-navbar);
     transition: right var(--transition-base);
+    border-radius: 0;              /* no pill on mobile drawer */
   }
 
   .navList.navListOpen { right: 0; }
   .navLink { font-size: var(--font-size-md); }
+
+  /* Pill shrinks less on mobile */
+  .header.scrolled {
+    width: calc(100% - 24px);
+    top: 10px;
+    border-radius: 20px;
+  }
 }
