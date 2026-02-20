@@ -1,3 +1,4 @@
+/* ── Grid ─────────────────────────── */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -6,6 +7,7 @@
   margin: 0 auto;
 }
 
+/* ── Card ─────────────────────────── */
 .card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -14,8 +16,16 @@
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.card:hover { border-color: var(--color-accent-soft); box-shadow: 0 4px 20px var(--color-shadow); }
+.card:hover {
+  border-color: var(--color-accent-soft);
+  box-shadow: 0 4px 20px var(--color-shadow);
+}
 
+.cardOpen {
+  border-color: var(--color-accent);
+}
+
+/* ── Card Header ──────────────────── */
 .cardHeader {
   width: 100%;
   display: flex;
@@ -23,17 +33,22 @@
   justify-content: space-between;
   padding: var(--space-5) var(--space-6);
   background: none;
+  border: none;
   cursor: pointer;
   text-align: left;
   gap: var(--space-4);
   transition: background var(--transition-fast);
 }
 
-.cardHeader:hover        { background: var(--color-bg-alt); }
-.cardHeaderOpen          { background: var(--color-accent-soft); }
-.cardHeaderOpen:hover    { background: var(--color-accent-soft); }
+.cardHeader:hover     { background: var(--color-bg-alt); }
+.cardHeaderOpen       { background: var(--color-accent-soft); }
+.cardHeaderOpen:hover { background: var(--color-accent-soft); }
 
-.cardMeta { display: flex; flex-direction: column; gap: 2px; }
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
 .cardTitle {
   font-size: var(--font-size-base);
@@ -41,11 +56,16 @@
   color: var(--color-text);
 }
 
+.cardHeaderOpen .cardTitle {
+  color: var(--color-accent);
+}
+
 .cardSub {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
+/* ── Chevron ──────────────────────── */
 .chevron {
   font-size: var(--font-size-xl);
   color: var(--color-text-muted);
@@ -54,36 +74,47 @@
   flex-shrink: 0;
 }
 
-.chevronOpen { transform: rotate(90deg); color: var(--color-accent); }
+.chevronOpen {
+  transform: rotate(90deg);
+  color: var(--color-accent);
+}
 
-/* ── Skills list ─────────────────── */
-.cardBody { border-top: 1px solid var(--color-border); }
+/* ── Card Body ────────────────────── */
+.cardBody {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-5) var(--space-6);
+}
 
-.skillsList {
+/* ── Pill grid ────────────────────── */
+.pillGrid {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
-.skillItem { display: flex; flex-direction: column; gap: var(--space-2); }
-
-.skillMeta { display: flex; justify-content: space-between; align-items: center; }
-
-.skillName  { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); }
-.skillLevel { font-size: var(--font-size-xs); color: var(--color-text-muted); }
-
-.skillBar {
-  height: 4px;
+/* ── Pill chip ────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
   background: var(--color-surface-alt);
-  border-radius: var(--radius-full);
-  overflow: hidden;
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+  cursor: default;
+  white-space: nowrap;
 }
 
-.skillFill {
-  height: 100%;
-  background: var(--color-accent);
-  border-radius: var(--radius-full);
+.pill:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
 }
 
-@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+/* ── Responsive ───────────────────── */
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+}
