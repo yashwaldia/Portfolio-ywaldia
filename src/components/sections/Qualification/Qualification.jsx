@@ -5,12 +5,15 @@ import { educationData, workData, certificationsData } from '../../../data/exper
 import styles from './Qualification.module.css';
 
 const TABS = [
-  { id: 'work',   label: 'Experience', data: workData },
-  { id: 'edu',    label: 'Education',  data: educationData },
-  { id: 'certs',  label: 'Certifications', data: certificationsData },
+  { id: 'work',  label: 'Experience',     data: workData },
+  { id: 'edu',   label: 'Education',      data: educationData },
+  { id: 'certs', label: 'Certifications', data: certificationsData },
 ];
 
-function TimelineItem({ item, index }) {
+// ✅ Accept total — use it to decide if line renders
+function TimelineItem({ item, index, total }) {
+  const isLast = index === total - 1;
+
   return (
     <motion.div
       className={styles.item}
@@ -19,7 +22,8 @@ function TimelineItem({ item, index }) {
       transition={{ duration: 0.35, delay: index * 0.07 }}
     >
       <div className={styles.itemDot} />
-      {index < TABS[0].data.length - 1 && <div className={styles.itemLine} />}
+      {/* ✅ No line on last item of whichever tab is active */}
+      {!isLast && <div className={styles.itemLine} />}
       <div className={styles.itemContent}>
         <h3 className={styles.itemTitle}>{item.title}</h3>
         <span className={styles.itemSub}>{item.company || item.institution || item.issuer}</span>
@@ -61,7 +65,12 @@ function Qualification() {
             transition={{ duration: 0.25 }}
           >
             {current.data.map((item, i) => (
-              <TimelineItem key={item.id} item={item} index={i} />
+              <TimelineItem
+                key={item.id}
+                item={item}
+                index={i}
+                total={current.data.length}  
+              />
             ))}
           </motion.div>
         </AnimatePresence>

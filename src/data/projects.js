@@ -3,7 +3,7 @@ export const projectsData = [
     id: 1,
     title: 'AlzCare Companion',
     description:
-      'A React.js voice chatbot built for Alzheimer\'s patients, supporting English and Hindi conversations via Speech Recognition and Speech Kit. Backend built with Node.js using Character AI API. Won 3rd place at the LearNowX Ideathon.',
+      'A React.js voice chatbot built for Alzheimer\'s patients, supporting English and Hindi conversations via Speech Recognition and Speech Kit. Backend built with Node.js using Character AI API.',
     image: '/assets/img/project-alzcare.png',
     type: 'Web App',
     tags: ['React.js', 'Node.js', 'Character AI', 'Speech Recognition', 'Vercel'],
