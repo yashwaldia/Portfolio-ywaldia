@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background circle -->
+  <rect width="64" height="64" rx="14" fill="#EAB308"/>
+
+  <!-- < symbol -->
+  <polyline
+    points="18,22 8,32 18,42"
+    stroke="#0a0a0a"
+    stroke-width="5.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- > symbol -->
+  <polyline
+    points="46,22 56,32 46,42"
+    stroke="#0a0a0a"
+    stroke-width="5.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- / slash -->
+  <line
+    x1="38" y1="18"
+    x2="26" y2="46"
+    stroke="#0a0a0a"
+    stroke-width="5.5"
+    stroke-linecap="round"
+  />
+</svg>
