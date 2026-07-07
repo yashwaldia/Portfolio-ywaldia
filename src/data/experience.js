@@ -9,27 +9,19 @@ export const workData = [
   },
   {
     id: 'work-1',
-    title: 'Freelance Frontend Developer',
-    company: 'Freelancer.com  ·  ⭐ 4.8 / 5',
-    period: '2024 – 2026',
-    description:
-      'Independently acquired and delivered multiple client projects on Freelancer.com, maintaining a 4.8/5 rating. Worked directly with clients outside the platform on long-term engagements — building production-ready web apps using React.js, REST APIs, AWS, and modern CSS. Key projects include Evis Networx (security firm web platform) and ChartMasterAI (AI-powered stock analysis app).',
-  },
-  {
-    id: 'work-2',
-    title: 'Frontend Developer',
-    company: 'CoachPro Consulting',
-    period: 'Oct 2025 – Dec 2025',
-    description:
-      'Freelance engagement with a leading PMP certification training firm. Revamped core UI components, modernised the visual design system, and improved site navigation — strengthening their professional branding for a global audience of project managers.',
-  },
-  {
-    id: 'work-3',
     title: 'Engineer Technology',
     company: 'Outlier AI (Scale AI)',
     period: 'Nov 2024 – Sep 2025',
     description:
       'Reviewed and annotated thousands of AI-generated React, TypeScript, and JavaScript code samples to improve model accuracy and production readiness. Contributed to training generative AI systems alongside a global developer community.',
+  },
+  {
+    id: 'work-2',
+    title: 'Freelance Frontend Developer',
+    company: 'Freelancer.com  ·  ⭐ 4.8 / 5',
+    period: '2024 – 2026',
+    description:
+      'Independently acquired and delivered multiple client projects on Freelancer.com, maintaining a 4.8/5 rating. Worked directly with clients outside the platform on long-term engagements — building production-ready web apps using React.js, REST APIs, AWS, and modern CSS. Key projects include Evis Networx (security firm web platform) and ChartMasterAI (AI-powered stock analysis app).',
   },
 ];
 
