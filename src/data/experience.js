@@ -1,9 +1,17 @@
 export const workData = [
   {
+    id: 'work-0',
+    title: 'Software Engineer Analyst (A4)',
+    company: 'Capgemini',
+    period: 'Mar 2026 – Present',
+    description:
+      'Working as a Software Engineer Analyst (Grade A4) at Capgemini. Building enterprise-grade software with a strong foundation in Java, OOP, Data Structures & Algorithms, and robust error handling. Developing REST APIs and JavaScript-centric web applications within a professional corporate ecosystem. Tech Stack: Java, JavaScript, REST APIs, Git, SQL.',
+  },
+  {
     id: 'work-1',
     title: 'Freelance Frontend Developer',
     company: 'Freelancer.com  ·  ⭐ 4.8 / 5',
-    period: '2024 – Present',
+    period: '2024 – 2026',
     description:
       'Independently acquired and delivered multiple client projects on Freelancer.com, maintaining a 4.8/5 rating. Worked directly with clients outside the platform on long-term engagements — building production-ready web apps using React.js, REST APIs, AWS, and modern CSS. Key projects include Evis Networx (security firm web platform) and ChartMasterAI (AI-powered stock analysis app).',
   },
