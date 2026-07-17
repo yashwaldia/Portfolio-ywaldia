@@ -13,14 +13,14 @@ export const projectsData = [
   },
   {
     id: 2,
-    title: 'PiHealth',
+    title: 'Flower Shop Template',
     description:
-      'A React Native (Expo) mobile app for pathology report analysis. Built with TypeScript, Firebase, and Recharts-based data visualization. Includes user authentication, report tracking, and cloud sync.',
-    image: '/assets/img/project-pihealth.png',
-    type: 'Mobile App',
-    tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'AsyncStorage'],
-    liveUrl: 'https://www.pihealth.online',
-    repoUrl: 'https://github.com/yashwaldia/pihealth',
+      'A beautifully designed flower shop website template built with modern web technologies. Features an elegant UI with product showcasing, responsive layout, and smooth user experience — deployed on Vercel.',
+    image: '/assets/img/project-flower-template.jpeg',
+    type: 'Web App',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Vercel'],
+    liveUrl: 'https://flowershoptemplate.vercel.app/',
+    repoUrl: 'https://github.com/yashwaldia/flowershoptemplate',
     featured: true,
   },
   {
