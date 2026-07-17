@@ -17,62 +17,117 @@
   gap: var(--space-5);
 }
 
-/* ── Card base ───────────────────── */
+/* ── Card base ───────────────────────────────────── */
 .card {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-surface-alt);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   cursor: pointer;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 6px 24px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bigCell .card   { aspect-ratio: 16 / 9; }
-.smallCell .card { aspect-ratio: 4 / 3; }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.16),
+    0 16px 40px rgba(0, 0, 0, 0.28);
+}
 
+/* ── Image wrapper — replaces old cardImg absolute fill ── */
+/*    Adds padding so screenshot edges are never clipped    */
 .cardImg {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
+  background: var(--color-surface-offset, #1a1a1a);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 10px 0 10px;
+  overflow: hidden;
+}
+
+/* Aspect ratio lives on the wrapper now, not the card */
+.bigCell  .cardImg { aspect-ratio: 16 / 9; }
+.smallCell .cardImg { aspect-ratio: 16 / 10; }
+
+/* ── Fake browser chrome bar ─────────────────────── */
+.cardImg::before {
+  content: '';
+  display: block;
+  height: 24px;
+  background: var(--color-surface-dynamic, #242424);
+  border-radius: 6px 6px 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 0;
+  background-image:
+    radial-gradient(circle at 10px 12px, #ff5f57 4px, transparent 4px),
+    radial-gradient(circle at 22px 12px, #febc2e 4px, transparent 4px),
+    radial-gradient(circle at 34px 12px, #28c840 4px, transparent 4px);
 }
 
 .cardImg img {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 24px);  /* subtract chrome bar height */
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  object-position: top center;
+  display: block;
+  border-radius: 0 0 4px 4px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.card:hover .cardImg img { transform: scale(1.04); }
+.card:hover .cardImg img {
+  transform: scale(1.03);
+}
 
-/* ── Overlay ─────────────────────── */
+/* ── Info area below image ───────────────────────── */
+.cardBody {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--color-surface);
+}
+
+/* ── Overlay (hover reveal on image portion only) ── */
 .overlay {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.96) 0%,
-    rgba(0, 0, 0, 0.82) 55%,
-    rgba(0, 0, 0, 0.18) 100%
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.84) 55%,
+    rgba(0, 0, 0, 0.0) 100%
   );
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--space-4);
+  padding: var(--space-5) var(--space-4);
   opacity: 0;
-  transition: opacity var(--transition-base);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
-.card:hover .overlay { opacity: 1; }
+.card:hover .overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-/* ── Overlay content ─────────────── */
+/* ── Overlay content ─────────────────────────────── */
 .overlayContent {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   transform: translateY(10px);
-  transition: transform var(--transition-base);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
   max-height: 90%;
   overflow-y: auto;
@@ -105,26 +160,25 @@
 .bigCell .cardTitle   { font-size: var(--font-size-xl); }
 .smallCell .cardTitle { font-size: var(--font-size-md); }
 
-/* ── Description row — desc + More on same line ─── */
+/* ── Description row ─────────────── */
 .descRow {
   display: flex;
-  align-items: flex-end;    /* More button sits at bottom of text */
+  align-items: flex-end;
   gap: var(--space-2);
 }
 
 .cardDesc {
   flex: 1;
   font-size: var(--font-size-sm);
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   line-height: var(--line-height-relaxed);
   display: -webkit-box;
-  -webkit-line-clamp: 1;    /* 1 line by default */
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-clamp: 1;
   overflow: hidden;
 }
 
-/* Expanded — show full description */
 .cardDescExpanded {
   -webkit-line-clamp: unset !important;
   line-clamp: unset !important;
@@ -145,8 +199,8 @@
   cursor: pointer;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  transition: opacity var(--transition-fast);
-  line-height: var(--line-height-relaxed); /* align with text */
+  transition: opacity 0.18s ease;
+  line-height: var(--line-height-relaxed);
 }
 
 .moreBtn:hover { opacity: 0.7; }
@@ -156,19 +210,18 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  max-height: 28px;        /* 1 row only by default */
+  max-height: 28px;
   overflow: hidden;
 }
 
-/* Expanded — show all tag rows */
 .tagsExpanded {
   max-height: none !important;
 }
 
 .tags :global(.tag) {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* ── Links ───────────────────────── */
@@ -186,30 +239,36 @@
   color: #0a0a0a;
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   flex-shrink: 0;
 }
 
-.linkBtn:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
+.linkBtn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
 
 .linkGhost {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255,255,255,0.25);
-  transition: all var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   flex-shrink: 0;
 }
 
-.linkGhost:hover { border-color: #fff; color: #fff; }
+.linkGhost:hover {
+  border-color: #fff;
+  color: #fff;
+}
 
 /* ── Tablet (≤900px) ─────────────── */
 @media (max-width: 900px) {
@@ -222,26 +281,28 @@
   .bigRow,
   .smallRow { grid-template-columns: 1fr; }
 
-  .bigCell .card   { aspect-ratio: 4 / 3; }
-  .smallCell .card { aspect-ratio: 3 / 2; }
+  .bigCell  .cardImg { aspect-ratio: 4 / 3; }
+  .smallCell .cardImg { aspect-ratio: 3 / 2; }
 
   .overlay {
     opacity: 1;
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.97) 0%,
-      rgba(0,0,0,0.85) 50%,
-      rgba(0,0,0,0.25) 100%
+      rgba(0, 0, 0, 0.97) 0%,
+      rgba(0, 0, 0, 0.85) 50%,
+      rgba(0, 0, 0, 0.25) 100%
     );
   }
 
-  .overlayContent  { transform: translateY(0); }
-  .tags            { max-height: none; }         /* show all tags on mobile */
+  .overlayContent { transform: translateY(0); }
+  .tags           { max-height: none; }
+  .cardImg        { padding: 6px 6px 0 6px; }
+  .cardImg::before { height: 20px; }
 }
 
 /* ── Small phones (≤400px) ───────── */
 @media (max-width: 400px) {
-  .bigCell .card,
-  .smallCell .card { aspect-ratio: 1 / 1; }
-  .overlay         { padding: var(--space-3); }
+  .bigCell .cardImg,
+  .smallCell .cardImg { aspect-ratio: 1 / 1; }
+  .overlay            { padding: var(--space-3); }
 }
